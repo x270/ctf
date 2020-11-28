@@ -468,7 +468,7 @@ Module options (exploit/unix/webapp/wp_admin_shell_upload):
    RHOSTS     192.168.188.128  yes       The target host(s), range CIDR identifier, or hosts file with syntax 'file:<path>'
    RPORT      80               yes       The target port (TCP)
    SSL        false            no        Negotiate SSL/TLS for outgoing connections
-   TARGETURI  /wp-login.php    yes       The base path to the wordpress application
+   TARGETURI  /                yes       The base path to the wordpress application
    USERNAME   elliot           yes       The WordPress username to authenticate with
    VHOST                       no        HTTP server virtual host
 
