@@ -198,7 +198,7 @@ Invalid passcode. Too short.
 ```
 短いらしい。Stringsコマンドで拾える文字列を見る。  
 以下は一部を省略している。8文字の数字を入れると、FLAGが現れる。
-```
+```shell
 [root@X270]# strings passcode
 Enter the passcode:
 Invalid passcode.
