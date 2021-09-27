@@ -456,3 +456,6 @@ while True:
     print(Z)
 ```
 
+以下、最終的な回答状況。  
+![image](https://user-images.githubusercontent.com/42441861/134931550-c7de1039-ebe6-4764-a2f8-0cbf40093044.png)
+
