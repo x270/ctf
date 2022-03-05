@@ -44,12 +44,12 @@ Content-Type: application/json
 
 ### 1000パターンすべて試行してみる。
 Intruderに送り、emailとpasswprdが強調された状態で、Attack typeは「Pitchfork」とする。
-![](20220305221710.png)
+![](./img/20220305221710.png)
 
-Payloadsタブに移動。
-Payload set「1」にメール1000件コピーしたものを「Paste」。
+Payloadsタブに移動。  
+Payload set「1」にメール1000件コピーしたものを「Paste」。  
 Payload set「2」に謎の文字列1000件コピーしたものを「Paste」。  
-![](20220305222132.png)
+![](./img/20220305222132.png)
 
 「Start attack」を押して試行開始。  
 無償版のBurp Suite Community Editionだと日が暮れるぐらい時間かかる。
