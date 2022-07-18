@@ -143,52 +143,8 @@ Accept-Language: ja,en-US;q=0.9,en;q=0.8
 
 ```
 
-```http
-HTTP/2 200 OK
-Date: Sun, 17 Jul 2022 04:31:01 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Length: 1520
-Server: Apache/2.4.38 (Debian)
-X-Powered-By: PHP/7.4.8
-Vary: Accept-Encoding
-
-<!DOCTYPE html>
-<html lang="Ja">
-  <head>
-    <!-- Document Meta-->
-    <meta charset="utf-8"/>
-    <!-- Stylesheets-->
-    <link href="assets/css/vendor.min.css" rel="stylesheet"/>
-    <link href="assets/css/style.css" rel="stylesheet"/>
-    <!--
-    Document Title
-    =============================================
-    -->
-    <title>Libra</title>
-  </head>
-  <body class="bg-gray">
-  <section id="libra">
-        <div class="container">
-          <div class="row clearfix">
-            <div class="col-12 col-md-12 offset-md-1 col-lg-8 offset-lg-1">
-            <h2 class="heading--title">Libra</h2>
-            <h6>リクエストヘッダー情報</h6>
-            <p>
-                フラグは<code>stardustChrome</code>という特殊なブラウザでしか閲覧できません。
-            </p>
-            <p>
-                X-Forwarded-For:113.150.97.62<br>X-Forwarded-Proto:https<br>X-Forwarded-Port:443<br>Host:libra.ctf.nazotoki.tech<br>X-Amzn-Trace-Id:Root=1-62d39085-3f00904712e95a0a7426701e<br>sec-ch-ua:&quot;-Not.A/Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;102&quot;<br>sec-ch-ua-mobile:?0<br>sec-ch-ua-platform:&quot;Windows&quot;<br>upgrade-insecure-requests:1<br><br />確かにstardustChromeを使ってるね。フラグをどうぞ！ <br />nazotokiCTF{<code>クローン</code>} <br />
-            </p>
-            <a href="/" onclick="window.location.reload();">再読み込み</a>
-            </div>
-          </div>
-        </div>
-      </section>
-  </body>
-</html>
-```
-
-nazotokiCTF{**クローン**}
+> 確かにstardustChromeを使ってるね。フラグをどうぞ！  
+> nazotokiCTF{**クローン**}
 
 ### みずがめ座
 社員ナンバーとパスワードを入力するフォームが表示される。
