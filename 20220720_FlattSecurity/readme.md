@@ -114,3 +114,9 @@ Error! ping: wow_congrats_you_executed_a_system_command.txt: Name or service not
 http://example.com/?ip=`cat`<`ls`
 ```
 これで同じディレクトリの他のファイル名も取得できる。
+
+スペースが不可のためオプションは付けられないが、文字数の許す限りでほかのコマンド結果もレスポンスに返すことができる。
+```
+http://example.com/?ip=`echo`<`df`
+```
+
