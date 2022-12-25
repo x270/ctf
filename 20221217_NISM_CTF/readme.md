@@ -893,3 +893,8 @@ Chrome DevToolsのコンソールを使ってみる。
 
 > NISM{2022_is_gone_and_2023_is_coming}
 
+### 結果
+全問正解、同率多数。
+![image](https://user-images.githubusercontent.com/42441861/209465088-d70ec17f-b9b1-4374-80b6-6dd509342632.png)
+
+![image](https://user-images.githubusercontent.com/42441861/209465134-f489a277-11bb-4e22-acf9-0509f3e691fc.png)
